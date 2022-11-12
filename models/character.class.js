@@ -1,15 +1,17 @@
 class Character extends MovableObject {
 
-    y = 230;
-    height = 210;
+    y = 200;
+    height = 250;
     width = 100;
 
-    constructor(){
-        super().loadImage('img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png')
+    constructor() {
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png')
 
     }
 
-    jump(){
+
+
+    jump() {
 
     }
 }
