@@ -4,6 +4,8 @@ class MovableObject {
     img;
     height = 150;
     width = 100;
+    speed = 0.15;
+    currentImage = 0;
     imageCache = {};
 
     loadImage(path) {
@@ -29,7 +31,9 @@ class MovableObject {
         console.log('Moving right');
     }
 
-    moveLeft(){
-        
+    moveLeft() {
+        setInterval(() => {  //setInterval bewirkt, dass dise Funktiion this.x -= 0.15 oft hintereinander ausgeführt wird mit 1000 / 60 setzen wir die Ausführung auf 60 bzw 60 fps
+            this.x -= this.speed;
+        }, 1000 / 60);
     }
 }

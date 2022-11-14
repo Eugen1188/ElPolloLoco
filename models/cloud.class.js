@@ -12,8 +12,7 @@ class Cloud extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {  //setInterval bewirkt, dass dise Funktiion this.x -= 0.15 oft hintereinander ausgeführt wird mit 1000 / 60 setzen wir die Ausführung auf 60 bzw 60 fps
-            this.x -= 0.15;
-        }, 1000 / 60);
+        this.moveLeft();
     }
+
 }
