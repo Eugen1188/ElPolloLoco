@@ -25,18 +25,16 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)  // canvas wird jedes mal neu geladen
 
         this.addObjectsToMap(this.backgroundObjects);
         this.addTopMap(this.character);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
         
-
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
-
         });
     }
 
