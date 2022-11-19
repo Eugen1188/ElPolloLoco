@@ -4,9 +4,10 @@ class MovableObject {
     img;
     height = 150;
     width = 100;
-    speed = 0.15;
+    speed = 10;
     currentImage = 0;
     imageCache = {};
+    otherDirection = false;
 
     loadImage(path) {
         this.img = new Image();   // img von oben enthält den Wert "new Image()". das glecih wie z. this.img = document.getEmelentById('Image') <img id="image">, nur wir fügen es in unsere world.class später ein statt mit HTML.
