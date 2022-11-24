@@ -1,6 +1,6 @@
 class MovableObject {
     x = 120;
-    y = 280;
+    y = 180;
     img;
     height = 150;
     width = 100;
@@ -8,18 +8,47 @@ class MovableObject {
     currentImage = 0;
     imageCache = {};
     otherDirection = false;
+    speedY = 0
+    acceleration = 2.5;
 
-    loadImage(path) {
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
+    isAboveGround() {
+        return this.y < 180;
+    }
+
+    loadImage(path) { // Lade ein Bild in die Welt;
         this.img = new Image();   // img von oben enthält den Wert "new Image()". das glecih wie z. this.img = document.getEmelentById('Image') <img id="image">, nur wir fügen es in unsere world.class später ein statt mit HTML.
         this.img.src = path; // wir geben dem image die Quelle der image datei hier: "img/2_character_pepe/2_walk/W-21.png"
     }
 
+
+    draw(ctx){
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawFrame(ctx){
+        ctx.beginPath();
+        ctx.lineWidth = '5';
+        ctx.strokeStyle = 'blue';
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+
+    
     /**
      * 
      * @param {Array} arr - ['img/image1.png', 'img/Image22.png', ...]
      */
 
-    loadImages(arr){
+    loadImages(arr) {    // Lade eine mehrer Bilder einer Bewegung in ein JSON namens imageCache
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
@@ -27,7 +56,7 @@ class MovableObject {
         });
     }
 
-    playAnimation(images){
+    playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 7 % 6; => 1, Rest 1
         let path = images[i];
         this.img = this.imageCache[path];
@@ -35,12 +64,14 @@ class MovableObject {
     }
 
     moveRight() {
-        console.log('Moving right');
+        this.x += this.speed;
     }
 
     moveLeft() {
-        setInterval(() => {  //setInterval bewirkt, dass dise Funktiion this.x -= 0.15 oft hintereinander ausgeführt wird mit 1000 / 60 setzen wir die Ausführung auf 60 bzw 60 fps
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+    }
+
+    jump() {
+        this.speedY = 25;
     }
 }
