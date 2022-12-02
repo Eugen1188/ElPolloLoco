@@ -29,18 +29,18 @@ class StatusBarBottle extends DrawableObjects{
     }
 
     resolveImageIndexBottle(){
-        if(this.percentageBottle == 100){
-            return 5;
-        }else if(this.percentageBottle == 80){
-            return 4;
-        }else if(this.percentageBottle == 60){
-            return 3;
-        }else if(this.percentageBottle == 40){
-            return 2;
-        }else if(this.percentageBottle == 20){
-            return 1;
-        }else{
+        if(this.percentageBottle == 5){
             return 0;
+        }else if(this.percentageBottle == 4){
+            return 1;
+        }else if(this.percentageBottle == 3){
+            return 2;
+        }else if(this.percentageBottle == 2){
+            return 3;
+        }else if(this.percentageBottle == 1){
+            return 4;
+        }else{
+            return 5;
         }
     }
 

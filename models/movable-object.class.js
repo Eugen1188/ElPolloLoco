@@ -1,11 +1,12 @@
 class MovableObject extends DrawableObjects {
 
-    speed = 10;
+    speed = 5;
     otherDirection = false;
     speedY = 0
     acceleration = 2.5;
     lastHit = 0;
     energy = 100;
+    energyEnemies = 1;
 
     applyGravity() {
         setInterval(() => {
@@ -27,9 +28,11 @@ class MovableObject extends DrawableObjects {
     isColliding(mo){
         return this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+            this.x < mo.x 
+            this.y + 125 < mo.y + mo.height
     }
+
+
 
 
     hit(){
@@ -51,6 +54,8 @@ class MovableObject extends DrawableObjects {
     isDead(){
         return this.energy == 0;
     }
+
+
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 7 % 6; => 1, Rest 1
