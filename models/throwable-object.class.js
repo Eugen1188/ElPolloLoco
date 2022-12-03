@@ -27,6 +27,11 @@ class ThrowableObjects extends MovableObject {
         }, 50);
     }
 
-
+    offset = {
+        top: 10,
+        bottom: 10,
+        right: 10,
+        left: 10
+    }
 
 }

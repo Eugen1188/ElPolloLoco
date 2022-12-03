@@ -11,6 +11,8 @@ class World {
     statusBarCoin = new StatusBarCoin();
     throwableObject = [];
 
+
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -20,12 +22,20 @@ class World {
         this.run();
         this.collectCollision();
         this.checkEnemyisHitting();
+        this.checkBossFight();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
+    checkBossFight() {
+        setInterval(() => {
+            if (this.character.x > 2000) {
+                this.level.enemies[6].startFight = true;
+            }
+        }, 1000 / 60);
+    }
 
     run() {
         setInterval(() => {
@@ -46,23 +56,34 @@ class World {
     checkEnemyisHitting() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && enemy.energy == 1) {
+                if (this.character.isColliding(enemy) && enemy.energy > 0) {
                     this.character.hit();
                     this.statusBarHealth.setPercentageHealth(this.character.energy);
                     console.log('Collision with Chracter, energy', this.character.energy);
                 }
-            }); }, 200);
-        }
+            });
+        }, 200);
+    }
 
-    checkThrowObjects(){
-            if(this.keyboard.D && this.character.bottles > 0) {
+
+    checkThrowObjects() {
+        if (this.keyboard.D && this.character.bottles > 0) {
             let bottle = new ThrowableObjects(this.character.x + 40, this.character.y + 100);
             this.throwableObject.push(bottle);
             this.character.bottles--;
+
+            this.level.enemies.forEach((enemy) => {
+                if (this.bottle.isColliding(enemy) && enemy.energy > 0){
+                    console.log('Gegner wurde getroffen!!')
+                }
+
+            });
             this.statusBarBottle.setPercentageBottle(this.character.bottles);
 
         }
     }
+
+
 
     /*
         checkCollisions(){
@@ -121,12 +142,12 @@ class World {
     }
 
 
-    checkCollisionBottles(){
+    checkCollisionBottles() {
         this.level.bottles.forEach(bottle => {
-            if(this.character.isColliding(bottle)){
+            if (this.character.isColliding(bottle)) {
                 let bottleNum = this.level.bottles.indexOf(bottle);
                 this.level.bottles.splice(bottleNum, 1)
-                if(this.character.bottles < 6){
+                if (this.character.bottles < 6) {
                     this.character.bottles += 1;
                 }
                 this.statusBarBottle.setPercentageBottle(this.character.bottles);

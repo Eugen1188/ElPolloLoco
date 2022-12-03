@@ -8,5 +8,10 @@ class Bottle extends MovableObject {
         this.width = 80;
     }
 
-
+    offset = {
+        top: 10,
+        bottom: 10,
+        right: 10,
+        left: 10
+    }
 }
