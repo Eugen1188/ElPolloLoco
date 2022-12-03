@@ -73,8 +73,8 @@ class World {
             this.character.bottles--;
 
             this.level.enemies.forEach((enemy) => {
-                if (this.bottle.isColliding(enemy) && enemy.energy > 0){
-                    console.log('Gegner wurde getroffen!!')
+                if (bottle.isColliding(enemy) && enemy.energy > 0){
+                    console.log('Gegner wurde getroffen!!');
                 }
 
             });
