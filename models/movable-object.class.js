@@ -7,6 +7,7 @@ class MovableObject extends DrawableObjects {
     lastHit = 0;
     energy = 100;
     energyEnemies = 1;
+    jump_sound = new Audio('audio/jump.mp3')
 
     applyGravity() {
         setInterval(() => {
@@ -80,5 +81,6 @@ class MovableObject extends DrawableObjects {
 
     jump() {
         this.speedY = 25;
+        this.jump_sound.play()
     }
 }

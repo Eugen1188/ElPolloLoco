@@ -1,39 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    
-    <script src="models/drawable-objects.class.js"></script>  
-    <script src="models/movable-object.class.js"></script> 
-    <script src="models/character.class.js"></script>    
-    <script src="models/chicken.class.js"></script>      
-    <script src="models/status-bar-health.class.js"></script>    
-    <script src="models/status-bar-bottle.class.js"></script>   
-    <script src="models/status-bar-coin.class.js"></script>   
-    <script src="models/world.class.js"></script>       
-    <script src="models/cloud.class.js"></script>   
-    <script src="models/background-object.class.js"></script>    
-    <script src="models/keyboard.class.js"></script>  
-    <script src="models/level.class.js"></script>    
-    <script src="models/throwable-object.class.js"></script> 
-    <script src="models/endboss.class.js"></script>   
+
+    <script src="js/script.js"></script>
+    <script src="models/drawable-objects.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/startscreen.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/status-bar-health.class.js"></script>
+    <script src="models/status-bar-bottle.class.js"></script>
+    <script src="models/status-bar-coin.class.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="models/endboss.class.js"></script>
     <script src="models/coins-object.class.js"></script>
     <script src="models/bottles-object.class.js"></script>
-    <script src="levels/levels1.js"></script>    
-    <script src="js/game.js"></script>    
+    <script src="levels/levels1.js"></script>
+    <script src="js/game.js"></script>
 
     <title>El Pollo Loco</title>
 
 
 </head>
+
 <body onload="init()">
+
     <h1>El Pollo Loco</h1>
 
-    <canvas id="canvas" width="720" height="480">
+    <div class="canvas-cont">
 
-    </canvas>
+        <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+
+        <div class="controller-exp-cont d-none" id="controller-exp">
+
+            <div class="cont-inner-cont">
+
+                <div class="controller-dis">
+                    <img class="controll-button-img" src="img/icons/up.png" alt="">
+                    <span class="button-action">Jump </span>
+                </div>
+                <div class="controller-dis">
+                    <img class="controll-button-img" src="img/icons/left.png" alt="">
+                    <span class="button-action">Walk Left </span>
+                </div>
+                <div class="controller-dis">
+                    <img class="controll-button-img" src="img/icons/right.png" alt="">
+                    <span class="button-action">Walk Right </span>
+                </div>
+                <div class="controller-dis">
+                    <img class="controll-button-img" src="img/icons/key-d.png" alt="">
+                    <span class="button-action"> Throw Bottle </span>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="first-screen" id="first-screen">
+            <div class="first-screen-cont">
+                <img class="screen-start" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+            </div>
+
+            <nav>
+                <div class="start-button-cont">
+                    <img class="start-button-img" onclick="startGame()" src="img/icons/start-button.png" alt="">
+                </div>
+
+                <div class="second-start-cont">
+                    <div class="controller-cicon-cont">
+                        <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+                    </div>
+                    <div class="colume-icon-cont">
+                        <img class="nav-img" onclick="muteSound()" src="img/icons/volume-adjustment.png" alt="">
+                    </div>
+                    <div class="fullscreen-icon-cont">
+                        <img class="nav-img" src="img/icons/full.png" alt="">
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="game-nav d-none" id="game-nav">
+            <div class="controller-cicon-cont">
+                <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+            </div>
+            <div class="colume-icon-cont">
+                <img class="nav-img" onclick="muteSound()" src="img/icons/volume-adjustment.png" alt="">
+            </div>
+            <div class="fullscreen-icon-cont">
+                <img class="nav-img" src="img/icons/full.png" alt="">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
 </body>
+
 </html>
