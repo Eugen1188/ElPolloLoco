@@ -33,80 +33,126 @@
 
 </head>
 
-<body onload="init()">
+<body id="body">
 
-    <h1>El Pollo Loco</h1>
+    <div class="overall-cont">
+        <h1 id="headline">El Pollo Loco</h1>
 
-    <div class="canvas-cont">
+        <div class="canvas-cont" id="canvas-cont">
 
-        <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+            <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
 
-        <div class="controller-exp-cont d-none" id="controller-exp">
+            <div class="turn-device-cont" id="turnDevice">
+                <span style="color: white;">PLEASE ROTATE YOUR DEVICE</span>
+            </div>
 
-            <div class="cont-inner-cont">
+            <div class="game-over-screen-cont" id="gameOverScreenLost">
+                <img style="width: 100%" src="img/9_intro_outro_screens/game_over/youlost.png" alt="">
+            </div>
 
-                <div class="controller-dis">
-                    <img class="controll-button-img" src="img/icons/up.png" alt="">
-                    <span class="button-action">Jump </span>
-                </div>
-                <div class="controller-dis">
-                    <img class="controll-button-img" src="img/icons/left.png" alt="">
-                    <span class="button-action">Walk Left </span>
-                </div>
-                <div class="controller-dis">
-                    <img class="controll-button-img" src="img/icons/right.png" alt="">
-                    <span class="button-action">Walk Right </span>
-                </div>
-                <div class="controller-dis">
-                    <img class="controll-button-img" src="img/icons/key-d.png" alt="">
-                    <span class="button-action"> Throw Bottle </span>
-                </div>
-
+            <div class="game-over-screen-cont" id="gameOverScreenWin">
+                <img style="width: 100%" src="img/9_intro_outro_screens/game_over/gameover.png" alt="">
             </div>
 
 
-        </div>
 
-        <div class="first-screen" id="first-screen">
-            <div class="first-screen-cont">
-                <img class="screen-start" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-            </div>
+            <div class="controller-exp-cont d-none" id="controller-exp">
 
-            <nav>
-                <div class="start-button-cont">
-                    <img class="start-button-img" onclick="startGame()" src="img/icons/start-button.png" alt="">
-                </div>
+                <div class="cont-inner-cont">
 
-                <div class="second-start-cont">
-                    <div class="controller-cicon-cont">
-                        <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+                    <div class="controller-dis">
+                        <img class="controll-button-img" src="img/icons/up.png" alt="">
+                        <span class="button-action">Jump </span>
                     </div>
-                    <div class="colume-icon-cont">
-                        <img class="nav-img" onclick="muteSound()" src="img/icons/volume-adjustment.png" alt="">
+                    <div class="controller-dis">
+                        <img class="controll-button-img" src="img/icons/left.png" alt="">
+                        <span class="button-action">Walk Left </span>
                     </div>
-                    <div class="fullscreen-icon-cont">
-                        <img class="nav-img" src="img/icons/full.png" alt="">
+                    <div class="controller-dis">
+                        <img class="controll-button-img" src="img/icons/right.png" alt="">
+                        <span class="button-action">Walk Right </span>
+                    </div>
+                    <div class="controller-dis">
+                        <img class="controll-button-img" src="img/icons/key-d.png" alt="">
+                        <span class="button-action"> Throw Bottle </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="first-screen" id="first-screen">
+                <div class="first-screen-cont">
+                    <img class="screen-start" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+                </div>
+
+                <nav>
+                    <div class="start-button-cont">
+                        <img class="start-button-img" onclick="initLevel(), init(), startGame()"
+                            src="img/icons/start-button.png" alt="">
+                    </div>
+
+                    <div class="second-start-cont">
+                        <div class="controller-cicon-cont">
+                            <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+                        </div>
+                        <div class="colume-icon-cont">
+                            <img class="nav-img" id="mute" onclick="muteSound()" src="img/icons/volume-adjustment.png"
+                                alt="">
+                            <img class="nav-img d-none" id="unmute" onclick="muteSound()" src="img/icons/no-sound.png"
+                                alt="">
+                        </div>
+                        <div class="fullscreen-icon-cont">
+                            <img class="nav-img" onclick="setFullscreen()" src="img/icons/full.png" alt="">
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="game-nav d-none" id="game-nav">
+                <div class="controller-cicon-cont">
+                    <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+                </div>
+                <div class="colume-icon-cont">
+                    <img class="nav-img" id="muteInGame" onclick="muteSound()" src="img/icons/volume-adjustment.png"
+                        alt="">
+                    <img class="nav-img d-none" id="unmuteInGame" onclick="muteSound()" src="img/icons/no-sound.png"
+                        alt="">
+                </div>
+                <div class="fullscreen-icon-cont">
+                    <img class="nav-img" onclick="setFullscreen()" src="img/icons/full.png" alt="">
+                </div>
+
+                <!--           <div class="fullscreenClose-icon-cont">
+                    <img class="nav-img" onclick="closeFullscreen()" src="img/icons/full.png" alt="">
+                </div>
+            -->
+            </div>
+
+
+            <div class="mobile-cont d-none" id="mobile-cont">
+                <div class="mobile-control-cont">
+                    <div class="mobile-icon-cont">
+                        <img class="mobile-icons-img" id="btnLeft" src="img/icons/left-arrow.png" alt="">
+                    </div>
+                    <div class="mobile-icon-cont">
+                        <img class="mobile-icons-img" id="btnRight" src="img/icons/right-arrow.png" alt="">
                     </div>
                 </div>
-            </nav>
-        </div>
 
-        <div class="game-nav d-none" id="game-nav">
-            <div class="controller-cicon-cont">
-                <img class="nav-img" onclick="showControl()" src="img/icons/game-controller.png" alt="">
+                <div class="mobile-control-cont">
+                    <div class="mobile-icon-cont">
+                        <img class="mobile-icons-img" id="btnJump" src="img/icons/jump.png" alt="">
+                    </div>
+                    <div class="mobile-icon-cont">
+                        <img class="mobile-icons-img" id="btnThrow" src="img/icons/throw.png" alt="">
+                    </div>
+                </div>
             </div>
-            <div class="colume-icon-cont">
-                <img class="nav-img" onclick="muteSound()" src="img/icons/volume-adjustment.png" alt="">
-            </div>
-            <div class="fullscreen-icon-cont">
-                <img class="nav-img" src="img/icons/full.png" alt="">
-            </div>
-
         </div>
 
     </div>
-
-
 
 </body>
 

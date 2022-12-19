@@ -8,6 +8,7 @@ class MovableObject extends DrawableObjects {
     energy = 100;
     energyEnemies = 1;
     jump_sound = new Audio('audio/jump.mp3')
+    gethit_sound = new Audio('audio/getHit.mp3')
 
     applyGravity() {
         setInterval(() => {
@@ -19,50 +20,39 @@ class MovableObject extends DrawableObjects {
     }
 
     isAboveGround() {
-        if(this instanceof ThrowableObjects)
-        return true
+        if (this instanceof ThrowableObjects)
+            return true
         return this.y < 180;
     }
 
-
     // character.isColliding(chicken); z.B
-
-
-
-
-
-        isColliding(mo){
+    isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top  < mo.y + mo.height - mo.offset.bottom
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
 
-
-
-
-
-    hit(){
+    hit() {
         this.energy -= 20;
-        if(this.energy < 0){
+        this.gethit_sound.play();
+        if (this.energy < 0) {
             this.energy = 0;
         }
-        else{
+        else {
             this.lastHit = new Date().getTime();
         }
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
-        return timepassed < 0.7; 
+        return timepassed < 0.7;
     }
 
-    isDead(){
+    isDead() {
         return this.energy == 0;
     }
-
-
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 7 % 6; => 1, Rest 1

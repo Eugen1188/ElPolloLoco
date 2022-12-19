@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     energy = 3;
     startFight = false;
     firstContact = false;
+    getHit = false;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -68,11 +69,22 @@ class Endboss extends MovableObject {
             if (!this.startFight && !this.firstContact) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 1000);
+        }, 200);
     }
 
     enemyHurt(){
-       this.playAnimation(this.IMAGES_HURT);
+        setInterval(() => {
+
+            if (this.getHit == true) {
+                this.playAnimation(this.IMAGES_HURT);
+                setTimeout(() => {
+                    this.getHit = false;
+                }, 700);
+            }
+            return;
+
+        },200);
+    
     }
 
 
@@ -87,7 +99,7 @@ class Endboss extends MovableObject {
 
     bossFight() {
         setInterval(() => {
-            if (this.startFight == true) {
+            if (this.startFight == true && this.getHit == false) {
                 this.playAnimation(this.IMAGES_FIGHT);
                 this.x -= 10;
                 this.firstContact = false;
