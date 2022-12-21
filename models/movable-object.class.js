@@ -15,6 +15,8 @@ class MovableObject extends DrawableObjects {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            }else if(!this.isAboveGround()){
+                this.speedY = 0;        // set speedY to 0 again, because after a jump it is < 0, we need speedY 0 for the "if-condition" when we jump on enemys, we can see when we come from top on the enemy;
             }
         }, 1000 / 25);
     }

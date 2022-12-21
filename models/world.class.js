@@ -14,6 +14,7 @@ class World {
     coin_sound = new Audio('audio/coin.mp3');
     bottle_sound = new Audio('audio/bottle.mp3');
     bottle_break_sound = new Audio('audio/bottle_break.mp3');
+    endboss = this.level.enemies[6];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,7 +38,7 @@ class World {
                     this.clearAllIntervals();
                     this.refreshPageWithTimer();
                 }, 1500);
-            }else if(this.level.enemies[6].energy == 0){
+            } else if (this.endboss.energy == 0) {
                 setTimeout(() => {
                     this.showGameOverScreen();
                     this.clearAllIntervals();
@@ -48,7 +49,7 @@ class World {
     }
 
 
-    refreshPageWithTimer(){
+    refreshPageWithTimer() {
         setTimeout(() => {
             window.location.reload();
         }, 3000);
@@ -60,7 +61,7 @@ class World {
         lost.style.zIndex = "999";
     }
 
-    showGameOverScreen(){
+    showGameOverScreen() {
         let win = document.getElementById('gameOverScreenWin');
         win.style.display = "flex";
         win.style.zIndex = "999";
@@ -68,7 +69,7 @@ class World {
 
     checkPlayMusic() {
         setInterval(() => {
-            if (this.playMusic == true) {
+            if (this.playMusic) {
                 this.gameMusic.play();
             }
         }, 1000);
@@ -86,7 +87,7 @@ class World {
     checkBossFight() {
         setInterval(() => {
             if (this.character.x > 2000) {
-                this.level.enemies[6].startFight = true;
+                this.endboss.startFight = true;
             }
         }, 1000);
     }
@@ -116,11 +117,10 @@ class World {
     checkEnemyisHitting() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && enemy.energy > 0) {
+                if (this.character.isColliding(enemy) && enemy.energy > 0 && this.character.speedY >= 0) {
                     this.character.hit();
                     this.character.idleTimer = 0;
                     this.statusBarHealth.setPercentageHealth(this.character.energy);
-                    console.log('Collision with Chracter, energy', this.character.energy);
                 }
             });
         }, 200);
@@ -139,9 +139,9 @@ class World {
                     enemy.energy--;
                     this.throwableObject.splice(to, 1);
                     this.bottle_break_sound.play();
-                    if (to.isColliding(this.level.enemies[6])) {
-                        this.level.enemies[6].getHit = true;
-                        this.level.enemies[6].enemyHurt();
+                    if (to.isColliding(this.endboss)) {
+                        this.endboss.getHit = true;
+                        this.endboss.enemyHurt();
                     }
                 }
                 if (to.y > 500) {
@@ -164,15 +164,21 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.energy != 0) {
-                this.character.jump();
-                if (enemy.energy == 1) {
-                    enemy.energy--;
+            if (this.jumpOnEnemy(enemy)) {
+                if (enemy instanceof Chicken) {
+                    this.character.jump();
+                    if (enemy.energy == 1) {
+                        enemy.energy--;
+                    }
                 }
-                console.log(enemy);
             }
         });
     }
+
+    jumpOnEnemy(enemy) {
+        return this.character.isColliding(enemy) && enemy.energy != 0 && this.character.speedY < 0
+    }
+
 
     checkCollisionsCoins() {
         this.level.coins.forEach((coin) => {
@@ -202,7 +208,6 @@ class World {
                 }
                 this.statusBarBottle.setPercentageBottle(this.character.bottles);
             }
-
         });
     }
 
@@ -227,7 +232,6 @@ class World {
         this.addTopMap(this.character);
 
         this.ctx.translate(- this.camera_x, 0)
-        //  this.addTopMap(this.startScreen);
 
         let self = this;
         requestAnimationFrame(function () {
@@ -247,7 +251,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        //    mo.drawFrame(this.ctx);
+    //    mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

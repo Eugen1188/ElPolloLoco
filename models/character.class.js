@@ -70,7 +70,7 @@ class Character extends MovableObject {
     bottles = 0;
     world;
     idleTimer = 0;
-    walking_sound = new Audio('audio/walking.mp3')
+    walking_sound = new Audio('audio/walking.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -84,7 +84,7 @@ class Character extends MovableObject {
         this.applyGravity();
         this.checkIdle();
         this.increaseIdleTimer();
-    }
+    };
 
     animate() {
         setInterval(() => {
@@ -106,7 +106,6 @@ class Character extends MovableObject {
                 this.jump();
                 this.idleTimer = 0;
             }
-
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
@@ -127,31 +126,37 @@ class Character extends MovableObject {
     }
 
 
+
     increaseIdleTimer() {
         setInterval(() => {
-            if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.D && !this.isHurt()) {
+            if (this.noInteractions) {
                 this.idleTimer++;
             }
-
         }, 500);
+    }
+
+    noInteractions(){
+        return !this.world.keyboard.RIGHT && 
+        !this.world.keyboard.LEFT && 
+        !this.world.keyboard.UP && 
+        !this.world.keyboard.D && 
+        !this.isHurt();
     }
 
     checkIdle() {
         setInterval(() => {
-            if(this.idleTimer > 5 && this.idleTimer < 20){
+            if(this.idleTimer > 0 && this.idleTimer < 10){
                 this.playAnimation(this.IMAGES_IDLE);
-            } else if(this.idleTimer > 20){
+            } else if(this.idleTimer > 10){
                 this.playAnimation(this.IMAGES_LONGIDLE);
             }
-            
-            
         }, 200);
 
     }
 
     offset = {
         top: 125,
-        bottom: 10,
+        bottom: 0,
         right: 20,
         left: 20
     }
