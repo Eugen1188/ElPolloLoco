@@ -7,12 +7,14 @@ class Endboss extends MovableObject {
     startFight = false;
     firstContact = false;
     getHit = false;
+    getHitSound = new Audio('audio/bossHit.mp3');
 
-    IMAGES_WALKING = [
-        'img/4_enemie_boss_chicken/1_walk/G1.png',
-        'img/4_enemie_boss_chicken/1_walk/G2.png',
-        'img/4_enemie_boss_chicken/1_walk/G3.png',
-        'img/4_enemie_boss_chicken/1_walk/G4.png'
+    IMAGES_IDLE = [
+        'img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/4_enemie_boss_chicken/2_alert/G7.png',
+        'img/4_enemie_boss_chicken/2_alert/G8.png',
+        'img/4_enemie_boss_chicken/2_alert/G9.png'
 
     ];
 
@@ -54,59 +56,32 @@ class Endboss extends MovableObject {
 
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
-        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_FIGHT);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
         this.animate();
-        this.bossFight();
-        this.checkEnemyDead();
     }
 
     animate() {
         setInterval(() => {
-            if (!this.startFight && !this.firstContact) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 200);
-    }
-
-    enemyHurt(){
-        setInterval(() => {
-
-            if (this.getHit == true) {
+            if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                setTimeout(() => {
-                    this.getHit = false;
-                }, 700);
-            }
-            return;
-
-        },200);
-    
-    }
-
-
-    checkEnemyDead() {
-        setInterval(() => {
-            if (this.energy == 0) {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-
-        }, 200);
-    }
-
-    bossFight() {
-        setInterval(() => {
-            if (this.startFight == true && this.getHit == false) {
+                this.getHitSound.play();
+            } else if (this.firstContact && !this.isDead()) {
                 this.playAnimation(this.IMAGES_FIGHT);
                 this.x -= 10;
-                this.firstContact = false;
+            } else if (!this.firstContact) {
+                this.playAnimation(this.IMAGES_IDLE);
+            } else {
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                }
             }
         }, 200);
-
     }
+
 
 
     offset = {
@@ -115,6 +90,5 @@ class Endboss extends MovableObject {
         right: 0,
         left: 0
     }
-
 
 }

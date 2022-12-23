@@ -1,7 +1,6 @@
 let canvas;
 let world
 let keyboard = new Keyboard();
-
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -16,7 +15,6 @@ function responsiveControl() {
     goJump();
     goThrow();
 }
-
 
 function goLeft() {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
@@ -61,8 +59,6 @@ function goThrow() {
         keyboard.D = false;
     });
 }
-
-
 
 
 window.addEventListener("keydown", (e) => {
