@@ -64,7 +64,7 @@ class World {
         win.style.zIndex = "999";
     }
 
-    checkPlayMusic(){
+    checkPlayMusic() {
         if (this.playMusic) {
             this.gameMusic.play();
         }
@@ -75,9 +75,9 @@ class World {
     }
 
     checkBossFight() {
-            if (this.character.x > 2000) {
-                this.endboss.firstContact = true;
-            }
+        if (this.character.x > 2000) {
+            this.endboss.firstContact = true;
+        }
     }
 
     run() {
@@ -100,7 +100,7 @@ class World {
         });
     }
 
-    PeppeGetHit(){
+    PeppeGetHit() {
         this.character.hit(20);
         this.character.idleTimer = 0;
         this.statusBarHealth.setPercentageHealth(this.character.energy);
@@ -122,6 +122,7 @@ class World {
                 if (this.bottleCollidingWithEnemy(to, enemy)) {
                     this.hitEnemyWithBottle(enemy, to);
                 }
+                //erase bottle from bottle array after missing enemy and get out of range
                 if (to.y > 500) {
                     this.throwableObject.splice(to, 1);
                 }
@@ -130,11 +131,11 @@ class World {
         this.statusBarBottle.setPercentageBottle(this.character.bottles);
     }
 
-    bottleCollidingWithEnemy(to, enemy){
-       return to.isColliding(enemy) && enemy.energy > 0
+    bottleCollidingWithEnemy(to, enemy) {
+        return to.isColliding(enemy) && !enemy.isDead()
     }
 
-    hitEnemyWithBottle(enemy, to){
+    hitEnemyWithBottle(enemy, to) {
         enemy.hit(1);
         this.throwableObject.splice(to, 1);
         this.bottle_break_sound.play();
@@ -153,18 +154,17 @@ class World {
     checkPeppeHitsEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.jumpOnEnemy(enemy)) {
-                if (enemy instanceof Chicken) {
-                    this.character.jump();
-                    if (enemy.energy == 1) {
-                        enemy.energy--;
-                    }
-                }
+                this.character.jump();
+                enemy.energy--;
             }
         });
     }
 
     jumpOnEnemy(enemy) {
-        return this.character.isColliding(enemy) && enemy.energy != 0 && this.character.speedY < 0
+        return this.character.isColliding(enemy) &&
+            !enemy.isDead() &&
+            this.character.speedY < 0 &&
+            enemy instanceof Chicken
     }
 
 
@@ -172,17 +172,17 @@ class World {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 this.collectCoin(coin);
-                if(!this.maxCoins())
-                this.statusBarCoin.setPercentageCoin(this.character.coins);
+                if (!this.maxCoins())
+                    this.statusBarCoin.setPercentageCoin(this.character.coins);
             }
         });
     }
 
-    maxCoins(){
+    maxCoins() {
         return this.character.coins > 100
     }
 
-    collectCoin(coin){
+    collectCoin(coin) {
         this.coin_sound.play();
         let coinNum = this.level.coins.indexOf(coin);
         this.level.coins.splice(coinNum, 1)
@@ -197,21 +197,21 @@ class World {
         });
     }
 
-    collectBottle(bottle){
+    collectBottle(bottle) {
         this.bottle_sound.play();
         let bottleNum = this.level.bottles.indexOf(bottle);
         this.level.bottles.splice(bottleNum, 1)
-        if (freeBottleSpace()) {
+        if (this.freeBottleSpace()) {
             this.character.bottles++;
             this.updateStatusBarBottle();
         }
     }
 
-    freeBottleSpace(){
+    freeBottleSpace() {
         return this.character.bottles < 6
     }
 
-    updateStatusBarBottle(){
+    updateStatusBarBottle() {
         this.statusBarBottle.setPercentageBottle(this.character.bottles);
     }
 

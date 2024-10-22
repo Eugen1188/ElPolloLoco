@@ -14,6 +14,20 @@ function startGame() {
   }
 }
 
+function fullscreenchanged () {
+  // document.fullscreenElement will point to the element that
+  // is in fullscreen mode if there is one. If there isn't one,
+  // the value of the property is null.
+  if (document.fullscreenElement == null) {
+    let fullscreenCont = document.getElementById('canvas-cont');
+    closeFullCanvas();
+    closeFullNav();
+    fullscreenMode = false;
+  }
+}
+document.addEventListener('fullscreenchange', fullscreenchanged);
+// When the toggle button is clicked, enter/exit fullscreen
+
 function showGame() {
   let canvas = document.getElementById('canvas');
   let startScreen = document.getElementById('first-screen');
@@ -23,9 +37,17 @@ function showGame() {
   gameNav.classList.remove('d-none'); // show the game nav menu with is outside the screen.
 }
 
+// function showResponsiveBtn() {
+
+//   if (screen.height < 480 && screen.width < 900 && gameStarted) {
+//     let mobileControl = document.getElementById('mobile-cont');
+//     mobileControl.classList.remove('d-none');
+//   }
+// }
+
 function showResponsiveBtn() {
 
-  if (screen.height < 480 && gameStarted) {
+  if (window.innerHeight < 480 && gameStarted) {
     let mobileControl = document.getElementById('mobile-cont');
     mobileControl.classList.remove('d-none');
   }
@@ -86,27 +108,16 @@ function unmuteIcon(mute, unmute, muteInGame, unmuteInGame) {
 
 function setFullscreen() {
   let fullscreenCont = document.getElementById('canvas-cont');
-  let canvas = document.getElementById('canvas');
-  if (!fullscreenMode && !gameStarted) {
+  if (!fullscreenMode) {
     enterFullscreen(fullscreenCont);
     showCanvasinFull();
     showNavinFull();
     fullscreenMode = true;
-  } else if (fullscreenMode && !gameStarted) {
-    exitFullscreen(fullscreenCont);
-    closeFullCanvas();
-    closeFullNav();
-    fullscreenMode = false;
-  } else if (fullscreenMode && gameStarted) {
-    exitFullscreen(fullscreenCont);
-    closeFullCanvas();
-    closeFullNav();
-    fullscreenMode = false;
   } else {
-    enterFullscreen(fullscreenCont);
-    showCanvasinFull();
-    showNavinFull();
-    fullscreenMode = true;
+    exitFullscreen(fullscreenCont);
+    closeFullCanvas();
+    closeFullNav();
+    fullscreenMode = false;
   }
 }
 

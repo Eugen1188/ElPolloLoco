@@ -31,7 +31,7 @@ class DrawableObjects {
     }
 
     drawFrame(ctx){
-        if (this instanceof Character || this instanceof Chicken) {
+        if (this.canDrawFrame()) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -40,4 +40,9 @@ class DrawableObjects {
         }
     }
 
+
+    canDrawFrame(){
+        return this instanceof Character || 
+        this instanceof Chicken
+    }
 }
